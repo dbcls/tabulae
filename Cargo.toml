@@ -1,0 +1,25 @@
+[package]
+name = "tabulae"
+version = "0.1.0"
+edition = "2024"
+
+[features]
+frontend = []
+
+[dependencies]
+anyhow = "1.0.96"
+clap = { version = "4.5.31", features = ["derive"] }
+duckdb = { git = "https://github.com/duckdb/duckdb-rs", version = "1.2.0", features = ["bundled"] }
+env_logger = "0.11.6"
+futures-util = "0.3.31"
+glob = "0.3.2"
+indicatif = "0.17.11"
+log = "0.4.26"
+regex = "1.11.1"
+reqwest = { version = "0.12.12", default-features = false, features = ["rustls-tls", "stream"] }
+serde = { version = "1.0.218", features = ["derive"] }
+serde_json = "1.0.139"
+spargebra = "0.3.4"
+tar = "0.4.44"
+tempfile = "3.17.1"
+tokio = { version = "1.43.0", features = ["macros"] }
