@@ -111,7 +111,9 @@ WHERE {
 We have created a query for the three tables for Layer 1. Let's try running it. In the example, we use podman to run the Docker container:
 
 ```
-podman run --rm -it -v ./queries:/work/queries -v ./dist:/work/dist tabulae build
+mkdir dist # Create a directory to store the results
+
+podman run -it --rm -v ./queries:/work/queries -v ./dist:/work/dist ghcr.io/dbcls/tabulae build
 ```
 
 It may take a while. The query will be executed and the tables will be generated. The results will be placed under the `dist` directory.
@@ -183,7 +185,7 @@ This is where you write your DuckDB queries. In this context, you can see the La
 Run `tabulae build` again:
 
 ```
-podman run --rm -it -v ./queries:/work/queries -v ./dist:/work/dist tabulae build
+podman run -it --rm -v ./queries:/work/queries -v ./dist:/work/dist ghcr.io/dbcls/tabulae build
 ```
 
 Then, if you reload [localhost:8080](http://localhost:8080/), you should see the Layer 2 table you just created.
@@ -311,7 +313,7 @@ http {
         listen       80;
 	listen  [::]:80;
         server_name  localhost;
-    
+
         location / {
              root   /usr/share/nginx/html;
              index  index.html index.htm;
@@ -343,7 +345,7 @@ http {
                 add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range' always;
              }
         }
-    
+
         error_page   500 502 503 504  /50x.html;
         location = /50x.html {
             root   /usr/share/nginx/html;
