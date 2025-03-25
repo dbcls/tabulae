@@ -15,7 +15,7 @@ queries
 ├── layer1
 │   ├── chembl_compound-atc-classification.rq
 │   ├── chembl_compound-uniprot-via-activity_assay.rq
-│   └── uniprot_protein-location.rq
+│   └── uniprot_protein-tissue.rq
 └── layer2
     └── combined.sql
 ```
@@ -82,7 +82,7 @@ This query has the text `# Paginate: 1000000` at the end. This is also a magic c
 Let's add one more query, as follows. This is the last one:
 
 ```sparql
-# uniprot_protein-location.rq
+# uniprot_protein-tissue.rq
 # Endpoint: https://rdfportal.org/sib/sparql
 PREFIX core: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -136,9 +136,9 @@ dist
 │   ├── chembl_compound-uniprot-via-activity_assay.csv
 │   ├── chembl_compound-uniprot-via-activity_assay.parquet
 │   ├── chembl_compound-uniprot-via-activity_assay.tsv
-│   ├── uniprot_protein-location.csv
-│   ├── uniprot_protein-location.parquet
-│   └── uniprot_protein-location.tsv
+│   ├── uniprot_protein-tissue.csv
+│   ├── uniprot_protein-tissue.parquet
+│   └── uniprot_protein-tissue.tsv
 ├── layer1.duckdb
 ├── layer2
 ├── layer2.duckdb
@@ -175,7 +175,7 @@ SELECT
 *
 FROM 'chembl_compound-atc-classification'
 NATURAL JOIN 'chembl_compound-uniprot-via-activity_assay'
-NATURAL JOIN 'uniprot_protein-location';
+NATURAL JOIN 'uniprot_protein-tissue';
 ```
 
 This is where you write your DuckDB queries. In this context, you can see the Layer 1 tables (you can't see the Layer 2 tables, as this is to simplify the dependency management). The output table for the statement in this file will be a Layer 2 table. The column names and types will also be used as they are.
@@ -241,7 +241,7 @@ D SHOW TABLES;
 ├────────────────────────────────────────────┤
 │ chembl_compound-atc-classification         │
 │ chembl_compound-uniprot-via-activity_assay │
-│ uniprot_protein-location                   │
+│ uniprot_protein-tissue                     │
 └────────────────────────────────────────────┘
 D SELECT * FROM 'chembl_compound-atc-classification' LIMIT 5;
 ┌────────────────────┬────────────┬─────────┐

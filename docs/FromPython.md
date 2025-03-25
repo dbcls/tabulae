@@ -71,7 +71,7 @@ USE layer1;
 combined = con.sql("""
 FROM 'chembl_compound-atc-classification'
 NATURAL JOIN 'chembl_compound-uniprot-via-activity_assay'
-NATURAL JOIN 'uniprot_protein-location';
+NATURAL JOIN 'uniprot_protein-tissue';
 """)
 
 # Extract the first letter of the ATC code
