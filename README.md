@@ -13,9 +13,9 @@ First of all, we need to create `queries` directory. This directory will contain
 ```
 queries
 ├── layer1
-│   ├── chembl_compound-atc-classification.rq
-│   ├── chembl_compound-uniprot-via-activity_assay.rq
-│   └── uniprot_protein-tissue.rq
+│   ├── chembl_compound_atc_classification.rq
+│   ├── chembl_compound_uniprot_via_activity_assay.rq
+│   └── uniprot_tissue.rq
 └── layer2
     └── combined.sql
 ```
@@ -27,7 +27,7 @@ And this is exactly what we are going to build in this tutorial.
 We are going to create a SPARQL query. Here, we use the endpoint provided by [rdfportal.org](http://rdfportal.org/) to query the ChEMBL database for “atcClassification”, as follows:
 
 ```sparql
-# chembl_compound-atc-classification.rq
+# chembl_compound_atc_classification.rq
 # Endpoint: https://rdfportal.org/ebi/sparql
 PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -49,7 +49,7 @@ The variable names of the bindings returned by the SELECT query become the colum
 Let's create another query, as shown in the following list:
 
 ```sparql
-# chembl_compound-uniprot-via-activity_assay.rq
+# chembl_compound_uniprot_via_activity_assay.rq
 # Endpoint: https://rdfportal.org/ebi/sparql
 PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -82,7 +82,7 @@ This query has the text `# Paginate: 1000000` at the end. This is also a magic c
 Let's add one more query, as follows. This is the last one:
 
 ```sparql
-# uniprot_protein-tissue.rq
+# uniprot_tissue.rq
 # Endpoint: https://rdfportal.org/sib/sparql
 PREFIX core: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -130,15 +130,15 @@ dist
 │   └── wasm-CG6Dc4jp.js
 ├── index.html
 ├── layer1
-│   ├── chembl_compound-atc-classification.csv
-│   ├── chembl_compound-atc-classification.parquet
-│   ├── chembl_compound-atc-classification.tsv
-│   ├── chembl_compound-uniprot-via-activity_assay.csv
-│   ├── chembl_compound-uniprot-via-activity_assay.parquet
-│   ├── chembl_compound-uniprot-via-activity_assay.tsv
-│   ├── uniprot_protein-tissue.csv
-│   ├── uniprot_protein-tissue.parquet
-│   └── uniprot_protein-tissue.tsv
+│   ├── chembl_compound_atc_classification.csv
+│   ├── chembl_compound_atc_classification.parquet
+│   ├── chembl_compound_atc_classification.tsv
+│   ├── chembl_compound_uniprot_via_activity_assay.csv
+│   ├── chembl_compound_uniprot_via_activity_assay.parquet
+│   ├── chembl_compound_uniprot_via_activity_assay.tsv
+│   ├── uniprot_tissue.csv
+│   ├── uniprot_tissue.parquet
+│   └── uniprot_tissue.tsv
 ├── layer1.duckdb
 ├── layer2
 ├── layer2.duckdb
@@ -173,9 +173,9 @@ Write the following query:
 -- queries/layer2/combined.sql
 SELECT
 *
-FROM 'chembl_compound-atc-classification'
-NATURAL JOIN 'chembl_compound-uniprot-via-activity_assay'
-NATURAL JOIN 'uniprot_protein-tissue';
+FROM 'chembl_compound_atc_classification'
+NATURAL JOIN 'chembl_compound_uniprot_via_activity_assay'
+NATURAL JOIN 'uniprot_tissue';
 ```
 
 This is where you write your DuckDB queries. In this context, you can see the Layer 1 tables (you can't see the Layer 2 tables, as this is to simplify the dependency management). The output table for the statement in this file will be a Layer 2 table. The column names and types will also be used as they are.
@@ -204,7 +204,7 @@ If you want to keep the trial-and-error loop for building the Layer 2 table shor
 ❯ duckdb --readonly dist/layer1.duckdb
 v1.2.0 5f5512b827
 Enter ".help" for usage hints.
-D SELECT * FROM 'chembl_compound-atc-classification' LIMIT 5;
+D SELECT * FROM 'chembl_compound_atc_classification' LIMIT 5;
 ┌────────────────────┬────────────┬─────────┐
 │ chembl_compound_id │   label    │   atc   │
 │      varchar       │  varchar   │ varchar │
@@ -239,11 +239,11 @@ D SHOW TABLES;
 │                    name                    │
 │                  varchar                   │
 ├────────────────────────────────────────────┤
-│ chembl_compound-atc-classification         │
-│ chembl_compound-uniprot-via-activity_assay │
-│ uniprot_protein-tissue                     │
+│ chembl_compound_atc_classification         │
+│ chembl_compound_uniprot_via_activity_assay │
+│ uniprot_tissue                             │
 └────────────────────────────────────────────┘
-D SELECT * FROM 'chembl_compound-atc-classification' LIMIT 5;
+D SELECT * FROM 'chembl_compound_atc_classification' LIMIT 5;
 ┌────────────────────┬────────────┬─────────┐
 │ chembl_compound_id │   label    │   atc   │
 │      varchar       │  varchar   │ varchar │
@@ -259,7 +259,7 @@ D SELECT * FROM 'chembl_compound-atc-classification' LIMIT 5;
 Of course, you can query an individual table dump:
 
 ```
-D SELECT * FROM 'http://localhost:8080/layer1/chembl_compound-atc-classification.parquet' LIMIT 5;
+D SELECT * FROM 'http://localhost:8080/layer1/chembl_compound_atc_classification.parquet' LIMIT 5;
 ┌────────────────────┬────────────┬─────────┐
 │ chembl_compound_id │   label    │   atc   │
 │      varchar       │  varchar   │ varchar │
