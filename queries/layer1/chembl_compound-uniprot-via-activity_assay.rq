@@ -1,0 +1,25 @@
+# Endpoint: https://rdfportal.org/ebi/sparql
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX tax: <http://identifiers.org/taxonomy/>
+
+SELECT DISTINCT
+  ?chembl_compound_id
+  ?uniprot_id
+  ?conf_score
+WHERE {
+  ?Molecule a cco:SmallMolecule ;
+      cco:hasActivity/cco:hasAssay [
+        a cco:Assay ;
+        cco:targetConfScore ?conf_score ;
+        cco:hasTarget/skos:exactMatch [
+        cco:taxonomy tax:9606 ;
+        skos:exactMatch ?uniprot
+        ]
+      ] .
+  ?uniprot a cco:UniprotRef .
+  BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
+  BIND (STRAFTER(STR(?uniprot), "http://purl.uniprot.org/uniprot/") AS ?uniprot_id)
+}
+# Paginate: 1000000

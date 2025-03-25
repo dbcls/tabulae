@@ -1,0 +1,15 @@
+# Endpoint: https://rdfportal.org/ebi/sparql
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?chembl_compound_id ?mesh_id ?mesh_heading
+WHERE {
+  ?Molecule a cco:SmallMolecule ;
+            cco:hasDrugIndication [
+              cco:hasMesh ?mesh ;
+              cco:hasMeshHeading ?mesh_heading
+            ] .
+  BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
+  BIND (STRAFTER(STR(?mesh), "http://identifiers.org/mesh/") AS ?mesh_id)
+}

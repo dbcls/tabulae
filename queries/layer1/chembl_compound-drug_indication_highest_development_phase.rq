@@ -1,0 +1,11 @@
+# Endpoint: https://rdfportal.org/ebi/sparql
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT ?chembl_compound_id ?drug_indication_highest_development_phase
+WHERE {
+    ?Molecule a cco:SmallMolecule ;
+              cco:hasDrugIndication/cco:highestDevelopmentPhase ?drug_indication_highest_development_phase .
+  BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
+}

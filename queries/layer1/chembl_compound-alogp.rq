@@ -1,0 +1,16 @@
+# Endpoint: https://rdfportal.org/ebi/sparql
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+PREFIX sio: <http://semanticscience.org/resource/>
+
+SELECT DISTINCT ?chembl_compound_id ?alogp
+WHERE {
+  ?Molecule a cco:SmallMolecule ;
+    sio:SIO_000008 ?attr_alogp .
+
+  ?attr_alogp a sio:CHEMINF_000251 ;
+    sio:SIO_000300 ?alogp .
+
+  FILTER (STRENDS(STR(?attr_alogp), "#alogp"))
+  BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
+}
+# Paginate: 1000000

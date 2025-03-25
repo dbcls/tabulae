@@ -1,0 +1,24 @@
+# Endpoint: https://rdfportal.org/sib/sparql
+PREFIX core: <http://purl.uniprot.org/core/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
+PREFIX chu: <http://purl.uniprot.org/proteomes/UP000005640#Unplaced>
+PREFIX ch: <http://purl.uniprot.org/proteomes/UP000005640#Chromosome%20>
+SELECT DISTINCT ?uniprot_id1 ?uniprot_id2
+FROM <http://sparql.uniprot.org/uniprot>
+FROM <http://sparql.uniprot.org/keywords>
+WHERE {
+  VALUES ?human_proteome { ch:1 ch:2 ch:3 ch:4 ch:5 ch:6 ch:7 ch:8 ch:9 ch:10
+                     ch:11 ch:12 ch:13 ch:14 ch:15 ch:16 ch:17 ch:18 ch:19
+                     ch:20 ch:21 ch:22 ch:X ch:Y ch:MT chu: }
+
+  ?uniprot core:proteome ?human_proteome ;
+           core:interaction [
+             a core:Non_Self_Interaction ;
+             core:participant/owl:sameAs ?uniprot2
+           ] .
+  ?uniprot2 core:proteome ?human_proteome .
+
+  BIND (STRAFTER(STR(?uniprot), "http://purl.uniprot.org/uniprot/") AS ?uniprot_id1)
+  BIND (STRAFTER(STR(?uniprot2), "http://purl.uniprot.org/uniprot/") AS ?uniprot_id2)
+}

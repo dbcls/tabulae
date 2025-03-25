@@ -1,0 +1,27 @@
+# Endpoint: https://rdfportal.org/ebi/sparql
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#>
+
+SELECT DISTINCT ?pathway ?pathway_id ?uniprot
+FROM <http://rdf.ebi.ac.uk/dataset/reactome>
+WHERE {
+  ?pathway a biopax:Pathway ;
+           biopax:organism/biopax:xref/biopax:id "9606"^^xsd:string ;
+           biopax:xref [
+             a biopax:UnificationXref ;
+             biopax:id ?pathway_id
+           ] ;
+           biopax:pathwayOrder/biopax:stepProcess [
+             a biopax:Control ;
+             biopax:controller/biopax:component*/biopax:entityReference [
+               a biopax:ProteinReference ;
+               biopax:xref [
+                 biopax:db "UniProt"^^xsd:string ;
+                 biopax:id ?uniprot
+               ]
+             ]
+           ].
+  FILTER (REGEX (?pathway_id, "HSA"))
+}

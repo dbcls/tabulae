@@ -1,0 +1,13 @@
+# Endpoint: https://rdfportal.org/ebi/sparql
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+PREFIX sio: <http://semanticscience.org/resource/>
+
+SELECT DISTINCT ?chembl_compound_id ?psa
+WHERE {
+  ?Molecule a cco:SmallMolecule ;
+    sio:SIO_000008 ?attr .
+  ?attr a sio:CHEMINF_000307 ;
+    sio:SIO_000300 ?psa .
+  BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
+}
+# Paginate: 1000000

@@ -1,0 +1,19 @@
+# Endpoint: https://rdfportal.org/ncbi/sparql
+PREFIX mo: <http://med2rdf/ontology/medgen#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX medgen: <http://www.ncbi.nlm.nih.gov/medgen/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX cvo:  <http://purl.jp/bio/10/clinvar/>
+PREFIX med2rdf: <http://med2rdf.org/ontology/med2rdf#>
+PREFIX sio: <http://semanticscience.org/resource/>
+
+SELECT DISTINCT ?clinvar_id ?ncbigene_id
+FROM <http://rdfportal.org/dataset/clinvar>
+WHERE {
+  ?clinvar cvo:classified_record/sio:SIO_000628/med2rdf:gene ?ncbigene .
+
+  BIND (STRAFTER(STR(?clinvar), "http://ncbi.nlm.nih.gov/clinvar/variation/") AS ?clinvar_id)
+  BIND (STRAFTER(STR(?ncbigene), "http://ncbi.nlm.nih.gov/gene/") AS ?ncbigene_id)
+}
+# Paginate: 1000000
