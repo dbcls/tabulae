@@ -1,0 +1,29 @@
+Endpoint: https://rdfportal.org/ebi/sparql
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX tax: <http://identifiers.org/taxonomy/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX cheminf: <http://semanticscience.org/resource/>
+
+SELECT DISTINCT
+  ?chembl_activty_id
+  ?uniprot_id
+  ?symbol_constraining_activity_value
+  ?selected_concentration_response_activity_values
+WHERE {
+  ?Activity a cco:Activity ;
+    cco:chemblId ?chembl_activty_id ;
+    cco:relation ?symbol_constraining_activity_value ;
+    cco:pChembl ?selected_concentration_response_activity_values ;
+    cco:hasAssay [
+      a cco:Assay ;
+      cco:hasTarget/skos:exactMatch [
+        cco:taxonomy tax:9606 ;
+        skos:exactMatch ?uniprot
+      ] 
+    ] .
+  ?uniprot a cco:UniprotRef .
+  BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
+  BIND (STRAFTER(STR(?uniprot), "http://purl.uniprot.org/uniprot/") AS ?uniprot_id)
+}

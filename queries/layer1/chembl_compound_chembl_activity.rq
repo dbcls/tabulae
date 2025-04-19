@@ -1,0 +1,14 @@
+Endpoint:  https://rdfportal.org/ebi/sparql
+PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
+
+SELECT DISTINCT
+  ?chembl_compound_id
+  ?chembl_activty_id
+WHERE {
+  ?Molecule a cco:SmallMolecule ;
+    cco:hasActivity [
+      a cco:Activity ;
+      cco:chemblId ?chembl_activty_id
+    ] .
+  BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
+}
