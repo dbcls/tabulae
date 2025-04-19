@@ -2,13 +2,15 @@
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX ng: <https://dbcls.github.io/ncbigene-rdf/ontology.ttl#>
 PREFIX tax: <http://identifiers.org/taxonomy/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?medgen_id ?ncbigene_id
+SELECT DISTINCT ?medgen_id ?disease_name ?ncbigene_id
 FROM <http://rdfportal.org/dataset/ncbigene>
 FROM <http://rdfportal.org/dataset/medgen>
 WHERE {
   ?ncbigene ng:taxid tax:9606 ;
         obo:RO_0003302 ?medgen .
+  ?medgen rdfs:label ?disease_name .
 
   BIND (STRAFTER(STR(?medgen), "http://www.ncbi.nlm.nih.gov/medgen/") AS ?medgen_id)
   BIND (STRAFTER(STR(?ncbigene), "http://identifiers.org/ncbigene/") AS ?ncbigene_id)
