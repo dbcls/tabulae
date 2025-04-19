@@ -3,15 +3,18 @@ PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX ng: <https://dbcls.github.io/ncbigene-rdf/ontology.ttl#>
 PREFIX tax: <http://identifiers.org/taxonomy/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX mo: <http://med2rdf/ontology/medgen#>
 
-SELECT DISTINCT ?medgen_id ?disease_name ?ncbigene_id
+SELECT DISTINCT ?medgen_id ?medgen_label ?semantic_type_id ?ncbigene_id
 FROM <http://rdfportal.org/dataset/ncbigene>
 FROM <http://rdfportal.org/dataset/medgen>
 WHERE {
   ?ncbigene ng:taxid tax:9606 ;
         obo:RO_0003302 ?medgen .
-  ?medgen rdfs:label ?disease_name .
+  ?medgen rdfs:label ?medgen_label ;
+          mo:sty ?semantic_type .
 
   BIND (STRAFTER(STR(?medgen), "http://www.ncbi.nlm.nih.gov/medgen/") AS ?medgen_id)
   BIND (STRAFTER(STR(?ncbigene), "http://identifiers.org/ncbigene/") AS ?ncbigene_id)
+  BIND (STRAFTER(STR(?semantic_type), "http://purl.bioontology.org/ontology/STY/") AS ?semantic_type_id)
 }
