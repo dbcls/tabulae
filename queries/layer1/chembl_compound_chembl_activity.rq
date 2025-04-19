@@ -1,4 +1,4 @@
-Endpoint:  https://rdfportal.org/ebi/sparql
+# Endpoint:  https://rdfportal.org/ebi/sparql
 PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
 
 SELECT DISTINCT
@@ -12,3 +12,4 @@ WHERE {
     ] .
   BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
 }
+# Paginate: 1000000

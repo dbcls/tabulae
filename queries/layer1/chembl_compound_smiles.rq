@@ -14,3 +14,4 @@ WHERE {
     ] .
   BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
 }
+# Paginate: 1000000
