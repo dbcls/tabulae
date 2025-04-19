@@ -1,0 +1,22 @@
+# Endpoint: https://rdfportal.org/sib/sparql
+PREFIX core: <http://purl.uniprot.org/core/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
+PREFIX chu: <http://purl.uniprot.org/proteomes/UP000005640#Unplaced>
+PREFIX ch: <http://purl.uniprot.org/proteomes/UP000005640#Chromosome%20>
+
+SELECT DISTINCT ?uniprot_id ?seq
+FROM <http://sparql.uniprot.org/uniprot>
+WHERE {
+  VALUES ?human_proteome { ch:1 ch:2 ch:3 ch:4 ch:5 ch:6 ch:7 ch:8 ch:9 ch:10
+                     ch:11 ch:12 ch:13 ch:14 ch:15 ch:16 ch:17 ch:18 ch:19
+                     ch:20 ch:21 ch:22 ch:X ch:Y ch:MT chu: }
+
+  ?uniprot core:proteome ?human_proteome ;
+           core:sequence [
+             a core:Simple_Sequence ;
+             rdf:value ?seq
+           ] .
+           
+  BIND (STRAFTER(STR(?uniprot), "http://purl.uniprot.org/uniprot/") AS ?uniprot_id)
+}
