@@ -13,10 +13,9 @@ WHERE {
                      ch:20 ch:21 ch:22 ch:X ch:Y ch:MT chu: }
 
   ?uniprot core:proteome ?human_proteome ;
-           core:sequence ?iso .
-            ?iso a core:Simple_Sequence ;
-             rdf:value ?seq
-            .
+    core:sequence ?iso .
+  ?iso a core:Simple_Sequence ;
+    rdf:value ?seq .
            
   BIND (STRAFTER(STR(?uniprot), "http://purl.uniprot.org/uniprot/") AS ?uniprot_id)
   FILTER (REGEX (STR (?iso), ?uniprot_id))
