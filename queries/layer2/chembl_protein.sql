@@ -1,0 +1,10 @@
+FROM 'chembl_compound_chembl_activity'
+NATURAL JOIN 'chembl_compound_ro5'
+NATURAL JOIN 'chembl_compound_alogp'
+NATURAL JOIN 'chembl_compound_mw'
+NATURAL JOIN 'chembl_compound_hba'
+NATURAL JOIN 'chembl_compound_hbd'
+NATURAL JOIN 'chembl_compound_smiles'
+NATURAL JOIN 'chembl_activity_value'
+NATURAL JOIN 'uniprot_seq'
+;

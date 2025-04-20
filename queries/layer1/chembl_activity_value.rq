@@ -1,4 +1,4 @@
-Endpoint: https://rdfportal.org/ebi/sparql
+#Endpoint: https://rdfportal.org/ebi/sparql
 PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -27,3 +27,5 @@ WHERE {
   BIND (STRAFTER(STR(?Molecule), "http://rdf.ebi.ac.uk/resource/chembl/molecule/") AS ?chembl_compound_id)
   BIND (STRAFTER(STR(?uniprot), "http://purl.uniprot.org/uniprot/") AS ?uniprot_id)
 }
+# Paginate: 1000000
+
