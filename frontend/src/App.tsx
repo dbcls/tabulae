@@ -13,25 +13,23 @@ function App() {
 	const [manifest, setManifest] = useState<Manifest | null>(null);
 	const [showL1, setShowL1] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-
-	const base = import.meta.env.VITE_MANIFEST_URL
-		? addTrailSlash(import.meta.env.VITE_MANIFEST_URL)
-		: "";
-	const [baseUrl, setBaseUrl] = useState<string>(base);
+	const baseUrl = addTrailSlash(
+		import.meta.env.VITE_MANIFEST_URL ?? location.href.replace("index.html", ""),
+	);
 
 	const manifestUrl = `${baseUrl}manifest.json`;
 
 	useEffect(() => {
-		if (baseUrl === "") {
-			setBaseUrl(location.href.replace("index.html", ""));
-		}
-	}, [baseUrl]);
-
-	useEffect(() => {
 		fetch(manifestUrl)
 			.then((res) => res.json())
-			.then((data) => setManifest(data))
-			.catch((err) => setError(err.message));
+			.then((data) => {
+				setManifest(data);
+				setError(null);
+			})
+			.catch((err) => {
+				setManifest(null);
+				setError(err.message);
+			});
 	}, [manifestUrl]);
 
 	if (!manifest) {

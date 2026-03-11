@@ -13,7 +13,7 @@ type Props = {
 
 let highlighterInstance: HighlighterCore | null = null;
 
-export const useShikiHighlighter = () => {
+const useShikiHighlighter = () => {
 	const [highlighter, setHighlighter] = useState<HighlighterCore | null>(
 		highlighterInstance,
 	);
