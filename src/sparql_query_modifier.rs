@@ -1,11 +1,11 @@
-use spargebra::{Query, algebra::GraphPattern};
+use spargebra::{Query, SparqlParser, algebra::GraphPattern};
 
 pub fn rewrite_query_limit_offset(
     query_str: &str,
     new_limit: usize,
     new_offeset: usize,
 ) -> anyhow::Result<Query> {
-    let mut query = Query::parse(query_str, None)?;
+    let mut query = SparqlParser::new().parse_query(query_str)?;
 
     match &mut query {
         Query::Select { pattern, .. } => match pattern {

@@ -73,11 +73,11 @@ async fn process_query<P: AsRef<Path>>(
     if !force {
         let stored_mtime_us = used_queries::get_mtime(conn, name)?;
 
-        if let Some(stored_mtime) = stored_mtime_us {
-            if stored_mtime >= query_mtime_us {
-                log::info!(target: &log_target, "Skipping as the query is up-to-date");
-                return Ok(());
-            }
+        if let Some(stored_mtime) = stored_mtime_us
+            && stored_mtime >= query_mtime_us
+        {
+            log::info!(target: &log_target, "Skipping as the query is up-to-date");
+            return Ok(());
         }
     }
 

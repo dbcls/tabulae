@@ -1,4 +1,4 @@
-ARG RUST_VERSION=1.85
+ARG RUST_VERSION=1.94.0
 ARG APP_NAME=tabulae
 
 FROM docker.io/library/rust:${RUST_VERSION}-bullseye AS build
