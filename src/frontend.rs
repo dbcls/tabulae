@@ -3,7 +3,7 @@ use std::fs;
 use std::io::Cursor;
 use tar::Archive;
 
-const FRONTEND_TAR: &'static [u8] = include_bytes!("../frontend.tar");
+const FRONTEND_TAR: &[u8] = include_bytes!("../frontend.tar");
 
 pub fn frontend(args: &Args) -> anyhow::Result<()> {
     log::info!(target: "frontend", "Populating frontend");
